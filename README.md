@@ -4,7 +4,11 @@ GeoJSON polygons for the **52 state-managed reservoirs of Bulgaria**, one file p
 
 ## Quick start
 
-Drag any file from [`data/`](./data) into [geojson.io](https://geojson.io) to view the polygon on a basemap. The files are plain GeoJSON — readable by MapLibre, Mapbox GL, Leaflet, QGIS, `JSON.parse`, or anything else that speaks the format.
+Each polygon traces the reservoir's shoreline. For example, Ogosta — one of the largest, with a sprawling multi-armed outline:
+
+<img src="./previews/ogosta.jpeg" alt="Ogosta reservoir polygon over satellite imagery" width="600">
+
+Drag any file from [`data/`](./data) into [geojson.io](https://geojson.io) to view the polygon on a basemap. The files are plain GeoJSON — readable by MapLibre, Mapbox GL, Leaflet, QGIS, `JSON.parse`, or any other tool that reads GeoJSON.
 
 ## Data format
 
@@ -27,14 +31,13 @@ Conformance errors fail the run. The right-hand-rule winding recommendation is a
 
 ## Provenance & known quirks
 
-The dataset was assembled by matching the canonical list of 52 state-managed reservoirs from Bulgaria's Ministry of Environment and Water (МОСВ — Министерство на околната среда и водите) against OpenStreetMap. A few things about the underlying OSM data are worth knowing:
+The dataset was assembled by matching the canonical list of 52 state-managed reservoirs from Bulgaria's Ministry of Environment and Water (MoEW; Bulgarian: Министерство на околната среда и водите, МОСВ) against OpenStreetMap. A few things about the underlying OSM data are worth knowing:
 
-- **Inconsistent tagging.** Reservoirs appear under several tag families, all of which had to be queried: `water=reservoir` (canonical), `water=basin`, `landuse=reservoir`, and `natural=water` named `яз.`/`язовир` for major ones lacking a `water=*` refinement. Chaira (Чаира) is tagged `water=lake` despite being an artificial pumped-storage reservoir.
-- **Inconsistent name casing.** OSM contributors use both `яз.` and `Яз.`; matching is case-insensitive.
-- **Pasarel vs Kokalyane.** МОСВ calls one upper-Iskar reservoir Kokalyane (Кокаляне, after the gorge); OSM names the same polygon Pasarel (Пасарел, after the village). This repo uses the МОСВ name (`kokalyane.geojson`); the source OSM polygon (`way/277322334`) is `яз. Пасарел`.
+- **Inconsistent tagging.** Reservoirs don't live under one OSM tag. Querying only the canonical `water=reservoir` found roughly 80% of them; reaching all 52 meant querying four tag families: `water=reservoir`, `water=basin`, `landuse=reservoir`, and `natural=water` features named `яз.`/`язовир` (the last for major reservoirs that lack a `water=*` tag). Chaira (Чаира) is tagged `water=lake` despite being an artificial pumped-storage reservoir.
+- **Inconsistent name casing.** OSM contributors write both `яз.` and `Яз.` (e.g. `Яз.Чаира`), so name matching must be case-insensitive — a case-sensitive query silently drops them.
+- **Pasarel vs Kokalyane.** MoEW calls one upper-Iskar reservoir Kokalyane (Кокаляне, after the gorge); OSM names the same polygon Pasarel (Пасарел, after the village). This repo uses the MoEW name (`kokalyane.geojson`); the source OSM polygon (`way/277322334`) is `яз. Пасарел`.
 - **Mixed feature types.** Matches are a mix of OSM `way` and `relation` objects. Relations were stitched into single polygons by joining member ways tip-to-tip.
 - **Auxiliary basins collapsed.** Where OSM maps a reservoir as a main basin plus smaller secondary ponds, only the largest polygon is kept (notably Golyam Beglik (Голям Беглик)). Consumers needing the auxiliary basins should query OSM directly.
-- **Gorni Dabnik needs refinement.** The Gorni Dabnik (Горни Дъбник) polygon (`gorni-dabnik.geojson`) is the one shape that doesn't track the real lake boundary well on a basemap. It's usable but the least accurate file in the set.
 
 ## Attribution & licence
 
