@@ -1,8 +1,7 @@
 name: Validate GeoJSON
 
-# Validate every .geojson file in the repo on each push and pull request.
-# This is the single highest-value automation for a public dataset: it stops
-# malformed or non-conformant GeoJSON from ever landing on main.
+# Validate every .geojson file in the repo on each push and pull request, so
+# malformed or non-conformant GeoJSON can't merge to main.
 
 on:
   pull_request:
