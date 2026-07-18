@@ -21,7 +21,7 @@ One `data/<slug>.geojson` file per reservoir. Each is a single GeoJSON `Feature`
 
 ## Validation
 
-Every file is checked against [RFC 7946](https://www.rfc-editor.org/rfc/rfc7946) on each push and pull request. Run the same check locally (requires [Bun](https://bun.sh)):
+Every file is checked against [RFC 7946](https://www.rfc-editor.org/rfc/rfc7946) on each push and pull request. Run the same check locally (requires [Node.js](https://nodejs.org); the version is pinned in [`.nvmrc`](./.nvmrc), so `nvm use` picks it up):
 
 ```bash
 ./scripts/validate.sh

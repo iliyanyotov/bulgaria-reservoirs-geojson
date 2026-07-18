@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Validate data/*.geojson against RFC 7946 via @mapbox/geojsonhint (bunx, no
+# Validate data/*.geojson against RFC 7946 via @mapbox/geojsonhint (npx, no
 # install). geojsonhint exits non-zero only on real errors — winding warnings
 # are advisory — so we trust its per-file exit code.
 
@@ -20,7 +20,7 @@ for f in data/*.geojson; do
   count=$((count + 1))
 
   # Quiet on success; print only files that fail (with the error detail).
-  if out=$(bunx @mapbox/geojsonhint@3.3.0 "$f" 2>&1); then
+  if out=$(npx --yes @mapbox/geojsonhint@3.3.0 "$f" 2>&1); then
     [ -n "$out" ] && advisories=$((advisories + 1)) # passed but had warnings
   else
     echo "::error file=$f::"
